@@ -15,12 +15,15 @@ createMakeFile(){
     echo ".DEFAULT_GOAL := default" > Makefile
     echo "" >> Makefile
     echo "fmt:" >> Makefile
-    echo "	@go fmt github.com/$2/$1/..." >> Makefile
+    echo "	@cd pkg && go fmt github.com/$2/$1/..." >> Makefile
     echo "" >> Makefile
     echo "test:" >> Makefile
-    echo "	@go test github.com/$2/$1/..." >> Makefile
+    echo "	@cd pkg && go test github.com/$2/$1/..." >> Makefile
     echo "" >> Makefile
-    echo "default: fmt test" >> Makefile
+    echo "build:" >> Makefile
+    echo "	@cd pkg && go build github.com/$2/$1/..." >> Makefile
+    echo "" >> Makefile
+    echo "default: fmt test build" >> Makefile
     echo "	@echo \"Formatted and built\"" >> Makefile
 }
 
@@ -106,4 +109,4 @@ fi
 createExample
 createTestExample
 createMakeFile $1 $2
-go mod init github.com/$2/$1
+cd pkg && go mod init github.com/$2/$1
